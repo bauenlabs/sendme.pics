@@ -1,2 +1,2 @@
-# sendme.pics
-The Repo for the development of sendme.pics
+# SendMe.pics
+SendMe.pics is a chat application written in Meteor. 
