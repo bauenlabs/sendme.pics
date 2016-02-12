@@ -1,0 +1,56 @@
+<head>
+  <title>SendMe.pics</title>
+</head>
+
+<body>
+  <div id="wrapper">
+       {{> sidebar }}
+          <h1>SendMe.pics</h1>
+          {{> loginButtons align="right"}}<br>
+        <div class="messages" id="messages">
+          {{> messages }}
+        </div>
+          {{> input }}
+  </div>
+</body>
+
+
+<template name="sidebar">
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav onlUsers">
+            <li class="sidebar-brand">
+                <a href="#">
+                    Online Users
+                </a>
+            </li>
+            {{#each onlusr}}
+                <li class="user"><a href='#'>{{username}}</a></li>
+            {{/each}}
+        </ul>
+    </div>
+</template>
+
+<template name="messages">
+  {{#each msgs}}
+    <div class="panel panel-default">
+    {{#if isImg}}
+      <div class="panel-heading">{{name}}:</div>
+      <div class="panel-body"><img src={{content}}></div> 
+    {{else}}
+       <div class="panel-heading">{{name}}:</div>
+       <div class="panel-body">{{content}}</div>
+    {{/if}}
+    </div>
+  {{/each}}
+</template>
+
+<template name="input">
+ <div class="input-group"> 
+ <span class="input-group-addon" id="basic-addon1">Message: </span>  
+ <input type="text" class="form-control" id="message" aria-describedby="basic-addon1">
+  <span class="input-group-btn">
+  <button class="btn btn-default" type="button">Go!</button>
+  </span> 
+  </div>
+</template>
+
