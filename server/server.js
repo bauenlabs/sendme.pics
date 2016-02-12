@@ -1,3 +1,4 @@
+//perms n shit
 Meteor.startup(function(){
    ChatRooms.allow({
         'insert':function(userId,doc){
@@ -12,16 +13,7 @@ Meteor.startup(function(){
     });
 });
 
-//Functions to use later
-//var opengrapher = Meteor.npmRequire('opengrapher');
-//function ogParse (UrlToParse) {
-//  opengrapher.parse(UrlToParse, function(err, ogDict) {
-//  if (err) throw err;
-//  console.log('OpenGrapher has been envoked');
-//  console.log(ogDict;
-//  });
-//}
-
+//methods n shiz
 Meteor.methods({
   'CrawlUrl' : function(url) {
    //method to scrape images from URLs that are for some page, and not directly of an image

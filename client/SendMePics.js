@@ -1,3 +1,4 @@
+//stupid accounts mgmt thing
 Accounts.ui.config({
    passwordSignupFields: 'USERNAME_AND_EMAIL'
 });
@@ -6,13 +7,14 @@ Deps.autorun(function(){
     Meteor.subscribe("onlusers");
 });
 
-//need to modify this function and the data models for users so there is a "friend" type connection, and we only display from this pool
+//populate side bar with oneline users
 Template.sidebar.helpers({
     'onlusr':function(){
         return Meteor.users.find({ "status.online": true , _id: {$ne: Meteor.userId()} });
     }
 });
 
+//switching chatrooms
 Template.sidebar.events({
     'click .user':function(){
         Session.set('currentId',this._id);
@@ -31,7 +33,7 @@ Template.sidebar.events({
 });
 
 
-
+//pulling in the right chatroom
 Template.messages.helpers({
     'msgs':function(){
         var result=ChatRooms.findOne({_id:Session.get('roomid')});
@@ -40,7 +42,7 @@ Template.messages.helpers({
     }
 });
 
-
+//this shit is not working lol
 Template.messages.onRendered(function () {
       console.log('rendered');
       console.log("scrolltop is " + $('#list').scrollTop());
