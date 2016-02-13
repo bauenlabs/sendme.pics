@@ -1,49 +1,48 @@
-Meteor.startup(function(){
-   ChatRooms.allow({
-        'insert':function(userId,doc){
-            return true;
-        },
-        'update':function(userId,doc,fieldNames, modifier){
-            return true;
-        },
-        'remove':function(userId,doc){
-            return false;
-        }
-    });
+/**
+ * @file
+ * Contains server utilities for this application.
+ */
+
+Meteor.startup(function () {
+  ChatRooms.allow({
+    'insert': function() {
+      return true;
+    },
+    'update': function() {
+      return true;
+    },
+    'remove': function() {
+      return false;
+    }
+  });
 });
 
-//Functions to use later
-//var opengrapher = Meteor.npmRequire('opengrapher');
-//function ogParse (UrlToParse) {
-//  opengrapher.parse(UrlToParse, function(err, ogDict) {
-//  if (err) throw err;
-//  console.log('OpenGrapher has been envoked');
-//  console.log(ogDict;
-//  });
-//}
-
 Meteor.methods({
+  /**
+   * Returns url to image.
+   * @param {String} url in which to search for image path.
+   * @returns {String} url to image.
+   */
   'CrawlUrl' : function(url) {
-   //method to scrape images from URLs that are for some page, and not directly of an image
-
-
-    // load future npm
-    Future =  Npm.require('fibers/future');
-    var myFuture = new Future();
-    
-    //load opengrapher npm
+    // Load dependencies.
     var opengrapher = Meteor.npmRequire('opengrapher');
-    
-    //run opengrapher, use future to wait for results
-    opengrapher.parse(url, function(err, ogDict) {
+    let Future =  Npm.require('fibers/future');
+
+    // Create a new future.
+    var myFuture = new Future();
+
+    // Run opengrapher, and resolve this method on completion.
+    opengrapher.parse(url, function (err, ogDict) {
       if (err) {
         myFuture.throw(err);
-      } else {
-	var url = ogDict['image'].split('?');
-	var image = url[0];
-        myFuture.return(image)
-        console.log(ogDict['image'])
-    }});
-     return myFuture.wait();
-  } 
- });
+        return;
+      }
+
+      var url = ogDict['image'].split('?');
+      myFuture.return(url[0]);
+    });
+
+    // Return deferred future.
+    return myFuture.wait();
+  }
+});
